@@ -4,8 +4,7 @@
 
 GameObject::GameObject() : active(true)
 {
-	transform = new TransformComponent(this);
-	components.push_back(transform);
+	transform = AddComponent<TransformComponent>();
 }
 
 GameObject::~GameObject()

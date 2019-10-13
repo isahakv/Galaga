@@ -1,8 +1,11 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
+// STD
 #include <memory>
 #include <vector>
-#include "../Components/BaseComponent.h"
+// Core
+#include "Core/Components/BaseComponent.h"
+#include "Core/GameObjects/InstanceID.h"
 
 struct SDL_Renderer;
 class BaseComponent;
@@ -26,11 +29,9 @@ public:
 		static_assert(std::is_base_of<BaseComponent, T>::value, "T must derive from BaseComponent");
 	
 		// Check that we don't already have a component of this type.
-		for (auto exisitingComponent : components)
-		{
-			if (T* component = dynamic_cast<T*>(exisitingComponent))
-				return component;
-		}
+		// If we have, then return it.
+		if (T* component = GetComponent<T>())
+			return component;
 
 		// The object does not have this component so we create it and 
 		// add it to our list.
@@ -38,7 +39,6 @@ public:
 		components.push_back(component);
 		return component;
 	}
-
 	template<typename T> T* GetComponent()
 	{
 		static_assert(std::is_base_of<BaseComponent, T>::value, "T must derive from BaseComponent");
@@ -51,10 +51,15 @@ public:
 	}
 
 	inline TransformComponent* GetTranform() const { return transform; }
+	inline int GetInstanceID() { return instanceID.Get(); }
+
 protected:
 	TransformComponent* transform;
 	std::vector<BaseComponent*> components;
+
+private:
 	bool active;
+	InstanceID instanceID;
 };
 
 #endif // !GAMEOBJECT_H

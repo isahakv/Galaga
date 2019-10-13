@@ -15,4 +15,5 @@ private:
 	PlayerShip* playerShip;
 
 	void SpawnPlayerShip();
+	void SpawnEnemyShip();
 };

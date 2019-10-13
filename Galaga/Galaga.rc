@@ -51,6 +51,10 @@ END
 // PNG
 //
 
+IDB_PNG2                PNG                     "galaga.png"
+
+IDB_PNG3                PNG                     "galaga_bullet.png"
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

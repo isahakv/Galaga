@@ -12,10 +12,13 @@ public:
 
 	inline Vector2D& GetPosition() { return position; }
 	inline void SetPosition(const Vector2D& pos) { position = pos; }
-	inline void SetPosition(int x, int y) { position = Vector2D(x, y); }
+	inline void SetPosition(float x, float y) { position = Vector2D(x, y); }
+	inline float GetRotation() { return rotationAngle; }
+	inline void SetRotation(float angle) { rotationAngle = angle; }
 	inline void Translate(const Vector2D& translation) { position += translation; }
 private:
 	Vector2D position;
+	float rotationAngle;
 };
 
 #endif // !TRANSFORMCOMPONENT_H

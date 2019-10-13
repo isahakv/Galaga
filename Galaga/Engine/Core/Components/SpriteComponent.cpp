@@ -6,19 +6,20 @@
 #include "../GameObjects/GameObject.h"
 #include "../Components/TransformComponent.h"
 
-SpriteComponent::SpriteComponent(GameObject* _owner, SDL_Texture* _texture, int sortingOrder)
-	: BaseComponent(_owner), Drawable(sortingOrder)
+SpriteComponent::SpriteComponent(GameObject* _owner)
+	: BaseComponent(_owner), Drawable(0), texture(nullptr), flip(SDL_RendererFlip::SDL_FLIP_NONE)
 {
 	Renderer::Get()->RegisterDrawable(this);
-	SetTexture(_texture);
 }
 
 void SpriteComponent::Update(float deltaTime)
 {
-	if (texture == nullptr)
-		return;
+}
 
-	// Renderer::Get()->Render(texture, owner->GetTranform()->GetPosition(), GetSize(), 0);
+void SpriteComponent::SetTexture(SDL_Texture* _texture, SDL_RendererFlip _flip)
+{ 
+	SetTexture(_texture);
+	flip = _flip;
 }
 
 Vector2D SpriteComponent::GetSize() const
@@ -28,18 +29,37 @@ Vector2D SpriteComponent::GetSize() const
 	return Vector2D(width, height);
 }
 
-SDL_Texture* SpriteComponent::GetRenderTarget(Vector2D& pos, Vector2D& size)
+Vector2D SpriteComponent::GetOrigin(Space space) const
+{
+	Vector2D origin = GetSize() / 2;
+	switch (space)
+	{
+	case Space::Relative:
+		return origin;
+		break;
+	case Space::World:
+		return owner->GetTranform()->GetPosition() + origin;
+		break;
+	default:
+		return Vector2D();
+	}
+}
+
+SDL_Texture* SpriteComponent::GetRenderTarget(Vector2D& pos, float& angle, SDL_RendererFlip& flip, Vector2D& size)
 {
 	if (texture == nullptr)
 		return nullptr;
 	
 	pos = owner->GetTranform()->GetPosition();
+	angle = owner->GetTranform()->GetRotation();
 	size = GetSize();
+	flip = this->flip;
 	return texture;
 }
 
 SpriteComponent::~SpriteComponent()
 {
 	Renderer::Get()->UnregisterDrawable(this);
-	SDL_DestroyTexture(texture);
+	if (texture)
+		SDL_DestroyTexture(texture);
 }

@@ -3,8 +3,8 @@
 
 void Scene::Update(float deltaTime)
 {
-	for (auto go : gameObjects)
-		go->Update(deltaTime);
+	for (int i = gameObjects.size() - 1; i >= 0; i--)
+		gameObjects[i]->Update(deltaTime);
 }
 
 void Scene::AddToScene(GameObject* gameObject)

@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "SDL.h"
 #include "SDL_image.h"
+#include "Physics/Physics.h"
 #include "Render/Renderer.h"
 #include "Core/Time/Time.h"
 #include "Core/Input/Input.h"
@@ -42,6 +43,7 @@ int Application::Run()
 		std::cout << Time::GetDeltaSeconds() << std::endl;
 		// Debugging.
 		activeScene->Update(Time::GetDeltaSeconds());
+		Physics::Get()->Update();
 		Renderer::Get()->RenderFrame();
 		// Time Update.
 		Time::CalculateDeltaTime();

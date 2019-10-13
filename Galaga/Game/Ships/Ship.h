@@ -1,7 +1,9 @@
 #pragma once
-#include "../../Engine/Core/GameObjects/GameObject.h"
+#include <SDL_render.h>
+#include "Core/GameObjects/GameObject.h"
 
 class SpriteComponent;
+class ColliderComponent;
 struct Vector2D;
 
 class Ship : public GameObject
@@ -11,4 +13,5 @@ public:
 
 protected:
 	SpriteComponent* spriteComponent;
+	ColliderComponent* colliderComponent;
 };
