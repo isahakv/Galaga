@@ -1,3 +1,12 @@
+# vs dirs
+.vs
+
+# vs files
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.aps
+
 # Prerequisites
 *.d
 
@@ -30,3 +39,7 @@
 *.exe
 *.out
 *.app
+
+# Debug folders
+/Debug
+/Galaga/Debug
