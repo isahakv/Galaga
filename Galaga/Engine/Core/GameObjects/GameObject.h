@@ -15,8 +15,10 @@ class GameObject
 {
 public:
 	GameObject();
-	~GameObject();
+	virtual ~GameObject();
 	virtual void Update(float deltaTime);
+	void Destroy();
+	void DestroyImmediate();
 	
 	inline bool IsActive() const { return active; }
 	inline void SetActive(bool _active) { active = _active; }
@@ -51,7 +53,8 @@ public:
 	}
 
 	inline TransformComponent* GetTranform() const { return transform; }
-	inline int GetInstanceID() { return instanceID.Get(); }
+	inline int GetInstanceID() const { return instanceID.Get(); }
+	inline bool IsPendingToDestroy() const { return pendingToDestroy; }
 
 protected:
 	TransformComponent* transform;
@@ -59,6 +62,7 @@ protected:
 
 private:
 	bool active;
+	bool pendingToDestroy;
 	InstanceID instanceID;
 };
 

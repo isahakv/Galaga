@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/SceneManagement/Scene.h"
+#include "Core/Math/Vector2D.h"
 
 class PlayerShip;
 
@@ -15,5 +16,5 @@ private:
 	PlayerShip* playerShip;
 
 	void SpawnPlayerShip();
-	void SpawnEnemyShip();
+	void SpawnEnemyShip(const Vector2D& pos);
 };

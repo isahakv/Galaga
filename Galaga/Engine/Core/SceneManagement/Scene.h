@@ -12,6 +12,7 @@ public:
 	virtual void Update(float deltaTime);
 	void AddToScene(GameObject* gameObject);
 	void RemoveFromScene(GameObject* gameObject);
+	void Destroy(GameObject* gameObject);
 
 protected:
 	std::vector<GameObject*> gameObjects;

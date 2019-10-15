@@ -7,6 +7,12 @@ void Scene::Update(float deltaTime)
 		gameObjects[i]->Update(deltaTime);
 }
 
+void Scene::Destroy(GameObject* gameObject)
+{
+	RemoveFromScene(gameObject);
+	delete gameObject;
+}
+
 void Scene::AddToScene(GameObject* gameObject)
 {
 	std::vector<GameObject*>::iterator it = std::find(gameObjects.begin(), gameObjects.end(), gameObject);

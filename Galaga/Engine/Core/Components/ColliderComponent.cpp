@@ -19,12 +19,7 @@ ColliderComponent::~ColliderComponent()
 void ColliderComponent::Update(float deltaTime)
 {
 	SDL_Rect rect = GetBounds();
-	Renderer::Get()->DrawDebugRect(&rect);
-}
-
-void ColliderComponent::SetBounds(const SDL_Rect& _bounds)
-{
-	bounds = _bounds;
+	// Renderer::Get()->DrawDebugRect(&rect);
 }
 
 SDL_Rect ColliderComponent::GetBounds() const
@@ -33,4 +28,18 @@ SDL_Rect ColliderComponent::GetBounds() const
 	// Adding offset.
 	pos += Vector2D((float)bounds.x, (float)bounds.y);
 	return SDL_Rect{ (int)pos.x, (int)pos.y, bounds.w, bounds.h };
+}
+
+void ColliderComponent::SetLayer(CollisionLayer layer)
+{
+	Physics::Get()->UnregisterCollider(this);
+	collisionLayer = layer;
+	Physics::Get()->RegisterCollider(this);
+}
+
+
+void ColliderComponent::OnCollisionEnter(ColliderComponent* other)
+{
+	if (collisionEnterHandler)
+		collisionEnterHandler(other);
 }

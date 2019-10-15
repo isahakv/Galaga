@@ -12,7 +12,16 @@
 GalagaScene::GalagaScene()
 {
 	SpawnPlayerShip();
-	SpawnEnemyShip();
+
+	// Spawn enemies.
+	Vector2D windowCenter = GalagaApplication::Get()->GetWindowSize() / 2;
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 25; j++)
+		{
+			SpawnEnemyShip(Vector2D(float(j * 32), windowCenter.y - float(i * 32)));
+		}
+	}
 }
 
 GalagaScene::~GalagaScene()
@@ -24,12 +33,6 @@ GalagaScene::~GalagaScene()
 void GalagaScene::Update(float deltaTime)
 {
 	Scene::Update(deltaTime);
-
-	for (auto& go : gameObjects)
-	{
-		if (go->IsActive())
-			go->Update(deltaTime);
-	}
 }
 
 void GalagaScene::SpawnPlayerShip()
@@ -43,11 +46,11 @@ void GalagaScene::SpawnPlayerShip()
 	gameObjects.push_back(playerShip);
 }
 
-void GalagaScene::SpawnEnemyShip()
+void GalagaScene::SpawnEnemyShip(const Vector2D& pos)
 {
-	EnemyShip* enemyShip = new EnemyShip(Vector2D(0, 0), Vector2D(0, 0));
-	Vector2D windowSize = GalagaApplication::Get()->GetWindowSize();
-	enemyShip->GetTranform()->SetPosition(Vector2D(windowSize.x / 2, windowSize.y / 2));
+	EnemyShip* enemyShip = new EnemyShip(pos, Vector2D(0, 0));
+	// Vector2D windowSize = GalagaApplication::Get()->GetWindowSize();
+	// enemyShip->GetTranform()->SetPosition(Vector2D(windowSize.x / 2, windowSize.y / 2));
 
 	gameObjects.push_back(enemyShip);
 }

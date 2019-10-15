@@ -26,7 +26,7 @@ Vector2D SpriteComponent::GetSize() const
 {
 	int width, height;
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
-	return Vector2D(width, height);
+	return Vector2D((float)width, (float)height);
 }
 
 Vector2D SpriteComponent::GetOrigin(Space space) const
@@ -49,6 +49,9 @@ SDL_Texture* SpriteComponent::GetRenderTarget(Vector2D& pos, float& angle, SDL_R
 {
 	if (texture == nullptr)
 		return nullptr;
+
+	if (owner->IsPendingToDestroy())
+		return NULL;
 	
 	pos = owner->GetTranform()->GetPosition();
 	angle = owner->GetTranform()->GetRotation();

@@ -20,6 +20,6 @@ void VelocityComponent::SetSpeed(float speed)
 {
 	this->speed = speed;
 	float angle = owner->GetTranform()->GetRotation();
-	velocity.x = sin(angle) * speed;
-	velocity.y = -cos(angle) * speed;
+	velocity.x = float(sin(angle) * speed);
+	velocity.y = float(-cos(angle) * speed);
 }

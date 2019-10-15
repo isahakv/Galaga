@@ -40,7 +40,7 @@ int Application::Run()
 		// Render Update.
 		Renderer::Get()->ClearFrame();
 		// Debugging.
-		std::cout << Time::GetDeltaSeconds() << std::endl;
+		// std::cout << Time::GetDeltaSeconds() << std::endl;
 		// Debugging.
 		activeScene->Update(Time::GetDeltaSeconds());
 		Physics::Get()->Update();
@@ -67,7 +67,7 @@ Vector2D Application::GetWindowSize() const
 {
 	int width, height;
 	SDL_GetWindowSize(window, &width, &height);
-	return Vector2D(width, height);
+	return Vector2D((float)width, (float)height);
 }
 
 Application::~Application()

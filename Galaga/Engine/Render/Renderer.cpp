@@ -35,7 +35,7 @@ void Renderer::ClearFrame()
 
 void Renderer::Render(SDL_Texture* texture, const Vector2D& pos, float angle, SDL_RendererFlip flip, const Vector2D& size)
 {
-	SDL_Rect destRect{ pos.x, pos.y, size.x, size.y};
+	SDL_Rect destRect{ (int)pos.x, (int)pos.y, (int)size.x, (int)size.y};
 	SDL_RenderCopyEx(renderer, texture, NULL, &destRect, angle, NULL, flip);
 }
 
@@ -55,6 +55,7 @@ void Renderer::RenderFrame()
 	float angle;
 	for (auto drawable : drawables)
 	{
+
 		texture = drawable->GetRenderTarget(pos, angle, flip, size);
 		if (texture == nullptr)
 			continue;

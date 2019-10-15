@@ -11,7 +11,7 @@ class SpriteComponent : public BaseComponent, Drawable
 {
 public:
 	SpriteComponent(GameObject* _owner);
-	~SpriteComponent();
+	virtual ~SpriteComponent();
 
 	void Update(float deltaTime) override;
 	inline void SetTexture(SDL_Texture* _texture) { texture = _texture; }
