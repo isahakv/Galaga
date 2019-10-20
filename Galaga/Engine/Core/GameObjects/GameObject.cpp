@@ -3,6 +3,7 @@
 #include "Core/Components/TransformComponent.h"
 #include "Core/SceneManagement/SceneManager.h"
 #include "Core/SceneManagement/Scene.h"
+#include <vector>
 
 GameObject::GameObject() : active(true), pendingToDestroy(false)
 {
@@ -13,15 +14,19 @@ GameObject::~GameObject()
 {
 	for (auto component : components)
 		delete component;
+	for (auto child : childObjects)
+		delete child;
 }
 
 void GameObject::Update(float deltaTime)
 {
+	if (!active)
+		return;
+
 	for (auto component : components)
 		component->Update(deltaTime);
-
-	if (pendingToDestroy)
-		DestroyImmediate();
+	for (auto child : childObjects)
+		child->Update(deltaTime);
 }
 
 void GameObject::Destroy()
@@ -29,7 +34,25 @@ void GameObject::Destroy()
 	pendingToDestroy = true;
 }
 
-void GameObject::DestroyImmediate()
+bool GameObject::IsPendingToDestroy()
 {
-	SceneManager::GetActiveScene()->Destroy(this);
+	if (pendingToDestroy)
+		return true;
+	else
+	{
+		// Check for children.
+		auto itr = childObjects.begin();
+		while (itr != childObjects.end())
+		{
+			GameObject* child = *itr;
+			if (child->IsPendingToDestroy())
+			{
+				delete child;
+				itr = childObjects.erase(itr);
+			}
+			else
+				itr++;
+		}
+		return false;
+	}
 }

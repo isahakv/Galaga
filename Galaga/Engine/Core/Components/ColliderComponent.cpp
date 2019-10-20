@@ -40,6 +40,6 @@ void ColliderComponent::SetLayer(CollisionLayer layer)
 
 void ColliderComponent::OnCollisionEnter(ColliderComponent* other)
 {
-	if (collisionEnterHandler)
-		collisionEnterHandler(other);
+	if (handlerCollisionEnter)
+		handlerCollisionEnter(other);
 }

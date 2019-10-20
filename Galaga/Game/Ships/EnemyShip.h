@@ -8,13 +8,16 @@
 class EnemyShip : public Ship
 {
 public:
-	EnemyShip(const Vector2D& pos, const Vector2D& _bulletOffset);
+	EnemyShip(const Vector2D& pos, const Vector2D& _bulletOffset, float _moveSpeed, float _minFireRate, float _maxFireRate);
 
 	virtual void Update(float deltaTime) override;
 
 private:
-	void Fire();
+	virtual void Fire() override;
 
 	Vector2D bulletOffset;
-
+	float minfireRate;
+	float maxfireRate;
+	float fireRate;
+	float fireRateCounter;
 };

@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 #include <vector>
+#include <memory>
 
 struct SDL_Renderer;
 class GameObject;
@@ -9,13 +10,13 @@ class GameObject;
 class Scene
 {
 public:
+	virtual ~Scene();
 	virtual void Update(float deltaTime);
-	void AddToScene(GameObject* gameObject);
-	void RemoveFromScene(GameObject* gameObject);
-	void Destroy(GameObject* gameObject);
+	void AddToScene(const std::shared_ptr<GameObject>& gameObject);
+	void RemoveFromScene(const std::shared_ptr<GameObject>& gameObject);
 
 protected:
-	std::vector<GameObject*> gameObjects;
+	std::vector<std::shared_ptr<GameObject>> gameObjects;
 };
 
 #endif // !SCENE_H

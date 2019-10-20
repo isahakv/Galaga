@@ -11,6 +11,8 @@ enum class CollisionLayer;
 class ColliderComponent : public BaseComponent
 {
 public:
+	typedef std::function<void(ColliderComponent*)> HandlerCollisionEnterType;
+
 	ColliderComponent(GameObject* _owner);
 	virtual ~ColliderComponent();
 
@@ -22,15 +24,15 @@ public:
 	void SetLayer(CollisionLayer layer);
 	inline CollisionLayer GetLayer() const { return collisionLayer; }
 
-	inline void BindCollisionEnter(std::function<void(ColliderComponent* other)>& handler)
-	{ collisionEnterHandler = handler; }
+	inline void BindCollisionEnter(const HandlerCollisionEnterType& handler)
+	{ handlerCollisionEnter = handler; }
 
 private:
 	void OnCollisionEnter(ColliderComponent* other);
 
 	SDL_Rect bounds;
 	CollisionLayer collisionLayer;
-	std::function<void(ColliderComponent* other)> collisionEnterHandler;
+	HandlerCollisionEnterType handlerCollisionEnter;
 
 	friend class Physics;
 };

@@ -1,7 +1,7 @@
 #include "TransformComponent.h"
 
 TransformComponent::TransformComponent(GameObject* owner)
-	: BaseComponent(owner), position(0, 0)
+	: BaseComponent(owner), position(0, 0), rotationAngle(0)
 {
 
 }

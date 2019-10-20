@@ -17,15 +17,19 @@ public:
 	int Run();
 	void Exit();
 	Vector2D GetWindowSize() const;
+	inline static float GetScaleFactor() { return scaleFactor; }
 
 private:
 	bool isRunnig = false;
 
 	void HandleInput();
+	void ResolveAspectRatio(int& width, int& height);
 
 protected:
 	SDL_Window* window;
 	Scene* activeScene;
+	// Scale factor relative to target screen size.
+	static float scaleFactor;
 };
 
 #endif // !APPLICATION_H

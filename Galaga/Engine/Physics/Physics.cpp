@@ -19,7 +19,7 @@ void Physics::Update()
 		for (auto collider : maps->second)
 			quadTree.Insert(collider);
 	}
-	quadTree.DrawDebug();
+	// quadTree.DrawDebug();
 	Resolve();
 }
 

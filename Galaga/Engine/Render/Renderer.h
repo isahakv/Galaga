@@ -22,6 +22,7 @@ public:
 
 	void RegisterDrawable(Drawable* drawable);
 	void UnregisterDrawable(Drawable* drawable);
+	void SortDrawables();
 
 	inline SDL_Renderer* GetRawRenderer() const { return renderer; }
 
@@ -29,8 +30,7 @@ public:
 	void DrawDebugRect(SDL_Rect* rect);
 
 private:
-	void Render(SDL_Texture* texture, const Vector2D& pos, float angle, SDL_RendererFlip flip, const Vector2D& size);
-	void SortDrawables();
+	void Render(SDL_Texture* texture, const SDL_Rect& srcRect, const SDL_Rect& dstRect, float angle, SDL_RendererFlip flip, SDL_Color color);
 
 	SDL_Renderer* renderer;
 	std::vector<Drawable*> drawables;

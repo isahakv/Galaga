@@ -1,5 +1,6 @@
 #ifndef VELOCITYCOMPONENT_H
 #define VELOCITYCOMPONENT_H
+#include "Core/TypeDefs.h"
 #include "Core/Components/BaseComponent.h"
 #include "Core/Math/Vector2D.h"
 
@@ -9,11 +10,11 @@ public:
 	VelocityComponent(GameObject* _owner);
 
 	void Update(float deltaTime) override;
-	inline float GetSpeed() const { return speed; }
-	void SetSpeed(float speed);
+
+	inline Vector2D GetVelocity() const { return velocity; }
+	void SetVelocity(const Vector2D& _velocity, Space space = Space::Relative);
 
 private:
-	float speed;
 	Vector2D velocity;
 };
 

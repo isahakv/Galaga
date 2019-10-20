@@ -18,7 +18,6 @@ public:
 	virtual ~GameObject();
 	virtual void Update(float deltaTime);
 	void Destroy();
-	void DestroyImmediate();
 	
 	inline bool IsActive() const { return active; }
 	inline void SetActive(bool _active) { active = _active; }
@@ -30,11 +29,6 @@ public:
 		// from Component. This is tested at compile time.
 		static_assert(std::is_base_of<BaseComponent, T>::value, "T must derive from BaseComponent");
 	
-		// Check that we don't already have a component of this type.
-		// If we have, then return it.
-		if (T* component = GetComponent<T>())
-			return component;
-
 		// The object does not have this component so we create it and 
 		// add it to our list.
 		T* component = new T(this);
@@ -51,14 +45,32 @@ public:
 		}
 		return nullptr;
 	}
+	template<typename T> void RemoveComponent(T* component)
+	{
+		// This ensures that we only try to add a class the derives 
+		// from Component. This is tested at compile time.
+		static_assert(std::is_base_of<BaseComponent, T>::value, "T must derive from BaseComponent");
+
+		auto iter = components.begin();
+		while (iter != components.end())
+		{
+			if (component == *iter)
+			{
+				components.erase(iter);
+				return;
+			}
+			iter++;
+		}
+	}
 
 	inline TransformComponent* GetTranform() const { return transform; }
 	inline int GetInstanceID() const { return instanceID.Get(); }
-	inline bool IsPendingToDestroy() const { return pendingToDestroy; }
+	bool IsPendingToDestroy();
 
 protected:
 	TransformComponent* transform;
 	std::vector<BaseComponent*> components;
+	std::vector<GameObject*> childObjects;
 
 private:
 	bool active;

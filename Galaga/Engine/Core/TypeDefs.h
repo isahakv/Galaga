@@ -7,5 +7,9 @@ enum class Space
 	World
 };
 
+constexpr int targetScreenWidth = 1920;
+constexpr int targetScreenHeight = 1080;
+constexpr float targetAspectRatio = targetScreenWidth / (float)targetScreenHeight;
+
 #endif // !TYPEDEFS_H
 

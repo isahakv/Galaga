@@ -2,7 +2,6 @@
 #include "Core/Components/ColliderComponent.h"
 #include "Core/GameObjects/GameObject.h"
 #include "Render/Renderer.h"
-#include <iostream>
 
 QuadTree::QuadTree() : QuadTree(5, 5, 0, SDL_Rect{ 0, 0, 800, 600 }, nullptr) {}
 

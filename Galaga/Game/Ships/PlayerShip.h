@@ -1,6 +1,5 @@
 #pragma once
 #include "Ship.h"
-#include "Core/Math/Vector2D.h"
 
 class PlayerShip : public Ship
 {
@@ -11,10 +10,9 @@ public:
 
 private:
 	void HandleInput(float deltaTime);
-	Vector2D GetBulletSpawnPos() const;
-	void Fire();
+	virtual void Fire() override;
 
-	Vector2D bulletOffset;
 	float moveSpeed;
 	float fireRate;
+	int xBound;
 };

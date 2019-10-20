@@ -2,6 +2,7 @@
 #include "../Engine/Core/SceneManagement/SceneManager.h"
 #include "GalagaScene.h"
 
+
 GalagaApplication* GalagaApplication::instance = nullptr;
 
 GalagaApplication::GalagaApplication()

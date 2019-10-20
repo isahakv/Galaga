@@ -33,10 +33,14 @@ void Renderer::ClearFrame()
 	SDL_RenderClear(renderer);
 }
 
-void Renderer::Render(SDL_Texture* texture, const Vector2D& pos, float angle, SDL_RendererFlip flip, const Vector2D& size)
+void Renderer::Render(SDL_Texture* texture, const SDL_Rect& srcRect, const SDL_Rect& dstRect, float angle, SDL_RendererFlip flip, SDL_Color color)
 {
-	SDL_Rect destRect{ (int)pos.x, (int)pos.y, (int)size.x, (int)size.y};
-	SDL_RenderCopyEx(renderer, texture, NULL, &destRect, angle, NULL, flip);
+	if (color.r != 255 && color.g != 255 && color.b != 255)
+		SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
+	if (color.a != 255)
+		SDL_SetTextureAlphaMod(texture, color.a);
+
+	SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, NULL, flip);
 }
 
 void Renderer::SortDrawables()
@@ -50,16 +54,16 @@ void Renderer::SortDrawables()
 void Renderer::RenderFrame()
 {
 	SDL_Texture* texture = nullptr;
+	SDL_Rect srcRect, dstRect;
 	SDL_RendererFlip flip;
-	Vector2D pos, size;
 	float angle;
+	SDL_Color color;
 	for (auto drawable : drawables)
 	{
-
-		texture = drawable->GetRenderTarget(pos, angle, flip, size);
+		texture = drawable->GetRenderTarget(srcRect, dstRect, angle, flip, color);
 		if (texture == nullptr)
 			continue;
-		Render(texture, pos, angle, flip, size);
+		Render(texture, srcRect, dstRect, angle, flip, color);
 	}
 
 	SDL_RenderPresent(renderer);
